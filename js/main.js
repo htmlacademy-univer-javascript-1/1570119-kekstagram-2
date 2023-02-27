@@ -10,3 +10,6 @@ const getRandomInt = (min, max) => {
 };
 
 const isCorrectLength = (str, maxLength) => str.length <= maxLength;
+getRandomInt(12, 24);
+
+isCorrectLength('Academy', 4);

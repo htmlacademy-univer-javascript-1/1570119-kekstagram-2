@@ -1,3 +1,9 @@
+import {
+  generateUniqueId,
+  getRandomElementOfArr,
+  getRandomInt
+} from './utils.js';
+
 const NAMES = [
   'Лосяш',
   'Крош',
@@ -35,4 +41,27 @@ const COMMENT_SENTENCES = [
   'Как можно было поймать такой неудачный момент?!'
 ];
 
-export { NAMES, COMMENT_SENTENCES, DESCRIPTION_SENTENCES };
+const MAX_COMMENTS_PER_POST = 5;
+
+// eslint-disable-next-line arrow-body-style
+const createComments = (count) => {
+  return Array.from({ length: count }, () => ({
+    id: generateUniqueId(),
+    avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
+    message: getRandomElementOfArr(COMMENT_SENTENCES),
+    name: getRandomElementOfArr(NAMES)
+  }));
+};
+
+const createPost = (id) => ({
+  id,
+  url: `photos/${id}`,
+  description: getRandomElementOfArr(DESCRIPTION_SENTENCES),
+  likes: getRandomInt(25, 200),
+  comments: createComments(getRandomInt(1, MAX_COMMENTS_PER_POST))
+});
+
+const generatePosts = () =>
+  Array.from({ length: 25 }, (_, id) => createPost(id + 1));
+
+export { generatePosts };

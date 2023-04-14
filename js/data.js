@@ -1,8 +1,4 @@
-import {
-  generateUniqueId,
-  getRandomElementOfArr,
-  getRandomInt
-} from './utils.js';
+import { generateUniqueId, getRandomElementOfArr, getRandomInt } from './utils.js';
 
 const NAMES = [
   'Лосяш',
@@ -55,13 +51,12 @@ const createComments = (count) => {
 
 const createPost = (id) => ({
   id,
-  url: `photos/${id}`,
+  url: `photos/${id}.jpg`,
   description: getRandomElementOfArr(DESCRIPTION_SENTENCES),
   likes: getRandomInt(25, 200),
   comments: createComments(getRandomInt(1, MAX_COMMENTS_PER_POST))
 });
 
-const generatePosts = () =>
-  Array.from({ length: 25 }, (_, id) => createPost(id + 1));
+const generatePosts = (count) => Array.from({ length: count }, (_, id) => createPost(id + 1));
 
 export { generatePosts };

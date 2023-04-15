@@ -38,6 +38,8 @@ const COMMENT_SENTENCES = [
 ];
 
 const MAX_COMMENTS_PER_POST = 5;
+const MIN_LIKES_ON_POST = 25;
+const MAX_LIKES_ON_POST = 200;
 
 // eslint-disable-next-line arrow-body-style
 const createComments = (count) => {
@@ -53,7 +55,7 @@ const createPost = (id) => ({
   id,
   url: `photos/${id}.jpg`,
   description: getRandomElementOfArr(DESCRIPTION_SENTENCES),
-  likes: getRandomInt(25, 200),
+  likes: getRandomInt(MIN_LIKES_ON_POST, MAX_LIKES_ON_POST),
   comments: createComments(getRandomInt(1, MAX_COMMENTS_PER_POST))
 });
 

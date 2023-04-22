@@ -14,7 +14,12 @@
       <!-- Фильтрация изображений от других пользователей -->
       <section class="img-filters img-filters--inactive container">
         <h2 class="img-filters__title visually-hidden">Фильтр фотографий</h2>
-        <form class="img-filters__form" action="index.html" method="get" autocomplete="off">
+        <form
+          class="img-filters__form"
+          action="index.html"
+          method="get"
+          autocomplete="off"
+        >
           <button
             type="button"
             class="img-filters__button img-filters__button--active"
@@ -22,8 +27,14 @@
           >
             По умолчанию
           </button>
-          <button type="button" class="img-filters__button" id="filter-random">Случайные</button>
-          <button type="button" class="img-filters__button" id="filter-discussed">
+          <button type="button" class="img-filters__button" id="filter-random">
+            Случайные
+          </button>
+          <button
+            type="button"
+            class="img-filters__button"
+            id="filter-discussed"
+          >
             Обсуждаемые
           </button>
         </form>
@@ -31,12 +42,16 @@
 
       <!-- Контейнер для изображений от других пользователей -->
       <section class="pictures container">
-        <h2 class="pictures__title visually-hidden">Фотографии других пользователей</h2>
+        <h2 class="pictures__title visually-hidden">
+          Фотографии других пользователей
+        </h2>
 
         <!-- Поле для загрузки нового изображения на сайт -->
         <section class="img-upload">
           <div class="img-upload__wrapper">
-            <h2 class="img-upload__title visually-hidden">Загрузка фотографии</h2>
+            <h2 class="img-upload__title visually-hidden">
+              Загрузка фотографии
+            </h2>
             <form
               class="img-upload__form"
               id="upload-select-image"
@@ -53,7 +68,9 @@
                   name="filename"
                   required
                 />
-                <label for="upload-file" class="img-upload__label img-upload__control"
+                <label
+                  for="upload-file"
+                  class="img-upload__label img-upload__control"
                   >Загрузить</label
                 >
               </fieldset>
@@ -64,7 +81,10 @@
                   <div class="img-upload__preview-container">
                     <!-- Изменение размера изображения -->
                     <fieldset class="img-upload__scale scale">
-                      <button type="button" class="scale__control scale__control--smaller">
+                      <button
+                        type="button"
+                        class="scale__control scale__control--smaller"
+                      >
                         Уменьшить
                       </button>
                       <input
@@ -75,7 +95,10 @@
                         name="scale"
                         readonly
                       />
-                      <button type="button" class="scale__control scale__control--bigger">
+                      <button
+                        type="button"
+                        class="scale__control scale__control--bigger"
+                      >
                         Увеличить
                       </button>
                     </fieldset>
@@ -101,7 +124,11 @@
                     </fieldset>
 
                     <!-- Кнопка для закрытия формы редактирования изображения -->
-                    <button type="reset" class="img-upload__cancel cancel" id="upload-cancel">
+                    <button
+                      type="reset"
+                      class="img-upload__cancel cancel"
+                      id="upload-cancel"
+                    >
                       Закрыть
                     </button>
                   </div>
@@ -134,7 +161,8 @@
                           value="chrome"
                         />
                         <label for="effect-chrome" class="effects__label">
-                          <span class="effects__preview effects__preview--chrome"
+                          <span
+                            class="effects__preview effects__preview--chrome"
                             >Превью эффекта Хром</span
                           >
                           Хром
@@ -164,7 +192,8 @@
                           value="marvin"
                         />
                         <label for="effect-marvin" class="effects__label">
-                          <span class="effects__preview effects__preview--marvin"
+                          <span
+                            class="effects__preview effects__preview--marvin"
                             >Превью эффекта Марвин</span
                           >
                           Марвин
@@ -179,7 +208,8 @@
                           value="phobos"
                         />
                         <label for="effect-phobos" class="effects__label">
-                          <span class="effects__preview effects__preview--phobos"
+                          <span
+                            class="effects__preview effects__preview--phobos"
                             >Превью эффекта Фобос</span
                           >
                           Фобос
@@ -206,7 +236,11 @@
                   <!-- Добавление хэш-тегов и комментария к изображению -->
                   <fieldset class="img-upload__text text">
                     <div class="img-upload__field-wrapper">
-                      <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег" />
+                      <input
+                        class="text__hashtags"
+                        name="hashtags"
+                        placeholder="#ХэшТег"
+                      />
                     </div>
                     <div class="img-upload__field-wrapper">
                       <textarea
@@ -214,11 +248,16 @@
                         name="description"
                         placeholder="Ваш комментарий..."
                       ></textarea>
+                      
                     </div>
                   </fieldset>
 
                   <!-- Кнопка для отправки данных на сервер -->
-                  <button type="submit" class="img-upload__submit" id="upload-submit">
+                  <button
+                    type="submit"
+                    class="img-upload__submit"
+                    id="upload-submit"
+                  >
                     Опубликовать
                   </button>
                 </div>
@@ -255,7 +294,9 @@
                 height="35"
               />
               <p class="social__caption">Тестим новую камеру! =)</p>
-              <p class="social__likes">Нравится <span class="likes-count">356</span></p>
+              <p class="social__likes">
+                Нравится <span class="likes-count">356</span>
+              </p>
             </div>
 
             <!-- Комментарии к изображению -->
@@ -271,7 +312,9 @@
                   width="35"
                   height="35"
                 />
-                <p class="social__text">Мега фото! Просто обалдеть. Как вам так удалось?</p>
+                <p class="social__text">
+                  Мега фото! Просто обалдеть. Как вам так удалось?
+                </p>
               </li>
               <li class="social__comment">
                 <img
@@ -286,7 +329,10 @@
             </ul>
 
             <!-- Кнопка для загрузки новой порции комментариев -->
-            <button type="button" class="social__comments-loader comments-loader">
+            <button
+              type="button"
+              class="social__comments-loader comments-loader"
+            >
               Загрузить еще
             </button>
 
@@ -299,13 +345,23 @@
                 width="35"
                 height="35"
               />
-              <input type="text" class="social__footer-text" placeholder="Ваш комментарий..." />
-              <button type="button" class="social__footer-btn" name="button">Отправить</button>
+              <input
+                type="text"
+                class="social__footer-text"
+                placeholder="Ваш комментарий..."
+              />
+              <button type="button" class="social__footer-btn" name="button">
+                Отправить
+              </button>
             </div>
           </div>
 
           <!-- Кнопка для выхода из полноэкранного просмотра изображения -->
-          <button type="reset" class="big-picture__cancel cancel" id="picture-cancel">
+          <button
+            type="reset"
+            class="big-picture__cancel cancel"
+            id="picture-cancel"
+          >
             Закрыть
           </button>
         </div>
@@ -318,7 +374,11 @@
           <a
             class="copyright__link copyright__link--image"
             href="https://htmlacademy.ru/intensive/javascript"
-            ><img src="img/htmla-logo.svg" width="130" height="45" alt="HTML Academy"
+            ><img
+              src="img/htmla-logo.svg"
+              width="130"
+              height="45"
+              alt="HTML Academy"
           /></a>
           <p>
             Сделано в
@@ -338,7 +398,11 @@
             >
           </li>
           <li>
-            <a href="https://vk.com/htmlacademy" class="contacts__link contacts__link--vk">VK</a>
+            <a
+              href="https://vk.com/htmlacademy"
+              class="contacts__link contacts__link--vk"
+              >VK</a
+            >
           </li>
         </ul>
       </div>
@@ -347,7 +411,13 @@
     <!-- Шаблон изображения случайного пользователя -->
     <template id="picture">
       <a href="#" class="picture">
-        <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография" />
+        <img
+          class="picture__img"
+          src=""
+          width="182"
+          height="182"
+          alt="Случайная фотография"
+        />
         <p class="picture__info">
           <span class="picture__comments"></span>
           <span class="picture__likes"></span>
@@ -369,7 +439,9 @@
       <section class="error">
         <div class="error__inner">
           <h2 class="error__title">Ошибка загрузки файла</h2>
-          <button type="button" class="error__button">Загрузить другой файл</button>
+          <button type="button" class="error__button">
+            Загрузить другой файл
+          </button>
         </div>
       </section>
     </template>
@@ -386,8 +458,11 @@
 
     <!-- Экран загрузки изображения -->
     <template id="messages">
-      <div class="img-upload__message img-upload__message--loading">Загружаем...</div>
+      <div class="img-upload__message img-upload__message--loading">
+        Загружаем...
+      </div>
     </template>
-    <script defer src="./js/main.js" type="module"></script>
+    <script src="pristine/pristine.min.js"></script>
+    <script defer src="js/main.js" type="module"></script>
   </body>
 </html>

@@ -1,9 +1,37 @@
+import { isEscapeKey } from './utils.js';
+
 const bigPictureElement = document.querySelector('.big-picture');
 const templateCommentElement = document
   .querySelector('#comment')
   .content.querySelector('.social__comment');
 const commentsListElement = document.querySelector('.social__comments');
-const closeButtonBigPictureElement = bigPictureElement.querySelector('.big-picture__cancel');
+const closeButtonBigPictureElement = bigPictureElement.querySelector(
+  '.big-picture__cancel'
+);
+
+const clearCommentList = () => {
+  commentsListElement.innerHTML = '';
+};
+
+const openModal = () => {
+  document.body.classList.add('modal-open');
+  bigPictureElement.classList.remove('hidden');
+};
+
+const onPopupEscKeydown = (event) => {
+  if (isEscapeKey(event)) {
+    event.preventDefault();
+    closeModal();
+  }
+};
+
+function closeModal() {
+  document.body.classList.remove('modal-open');
+  bigPictureElement.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  closeButtonBigPictureElement.removeEventListener('click', closeModal);
+  clearCommentList();
+}
 
 /**
  * @param {Object} comment
@@ -12,7 +40,6 @@ const closeButtonBigPictureElement = bigPictureElement.querySelector('.big-pictu
  * @param  {string} comment.message - сообщение пользователя.
  * @param  {string} comment.name - имя пользователя
  * @return {void}
- *
  */
 
 const createComment = ({ avatar, message, name }) => {
@@ -23,22 +50,6 @@ const createComment = ({ avatar, message, name }) => {
   commentElement.querySelector('.social__text').textContent = message;
   return commentElement;
 };
-const toggleFullScreenPicture = () => {
-  document.body.classList.toggle('modal-open');
-  bigPictureElement.classList.toggle('hidden');
-};
-
-const closeEscape = (event) => {
-  if (event.code === 'Escape' && !bigPictureElement.classList.contains('hidden')) {
-    toggleFullScreenPicture();
-  }
-};
-
-const closeFullScreenPicture = () => {
-  closeButtonBigPictureElement.addEventListener('click', toggleFullScreenPicture);
-  document.addEventListener('keydown', closeEscape);
-};
-
 
 /**
  * @param {Object} post
@@ -50,24 +61,23 @@ const closeFullScreenPicture = () => {
  * @return {Void}
  */
 
-
 const renderFullScreenPicture = (post) => {
-  commentsListElement.innerHTML = '';
-
   const { url, description, likes, comments } = post;
 
   bigPictureElement.querySelector('.big-picture__img img').src = url;
   bigPictureElement.querySelector('.social__caption').textContent = description;
   bigPictureElement.querySelector('.likes-count').textContent = likes;
-  bigPictureElement.querySelector('.comments-count').textContent = comments.length;
+  bigPictureElement.querySelector('.comments-count').textContent =
+    comments.length;
 
   comments.forEach((comment) => {
     const newComment = createComment(comment);
     commentsListElement.append(newComment);
   });
+  openModal();
 
-  toggleFullScreenPicture();
-  closeFullScreenPicture();
+  document.addEventListener('keydown', onPopupEscKeydown);
+  closeButtonBigPictureElement.addEventListener('click', closeModal);
 };
 
 export { renderFullScreenPicture };

@@ -22,9 +22,12 @@ const getRandomElementOfArr = (elements) => {
   return elements[getRandomInt(0, elements.length - 1)];
 };
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 export {
   generateUniqueId,
   getRandomElementOfArr,
   isCorrectLength,
-  getRandomInt
+  getRandomInt,
+  isEscapeKey
 };

@@ -1,5 +1,7 @@
 import { isEscapeKey } from './utils.js';
 import { validator } from './form-vaidation.js';
+import { addScale, resetScale } from './form-scale-picture.js';
+import { addFilters, resetFilters } from './form-filters-picture.js';
 
 const form = document.querySelector('#upload-select-image');
 const overlay = document.querySelector('.img-upload__overlay');
@@ -10,6 +12,11 @@ const descriptionInput = form.querySelector('.text__description');
 const openModal = () => {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
+};
+
+const closeModal = () => {
+  overlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
 };
 
 const onPopupEscKeydown = (event) => {
@@ -36,19 +43,23 @@ const submitForm = (event) => {
 
 function closeForm() {
   clearForm();
-  overlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  resetFilters();
+  resetScale();
+  closeModal();
+
   document.removeEventListener('keydown', onPopupEscKeydown);
   closeButton.removeEventListener('click', closeForm);
   hashtagInput.removeEventListener('keydown', stopPropagation);
   descriptionInput.removeEventListener('keydown', stopPropagation);
+
   form.removeEventListener('submit', submitForm);
 }
 
 const showUploadFileForm = () => {
+  addFilters();
   openModal();
+  addScale();
   form.addEventListener('submit', submitForm);
-
   document.addEventListener('keydown', onPopupEscKeydown);
   closeButton.addEventListener('click', closeForm);
   hashtagInput.addEventListener('keydown', stopPropagation);

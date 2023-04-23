@@ -2,7 +2,6 @@
   "name": "kekstagram",
   "version": "26.0.0",
   "private": true,
-  "type": "module",
   "description": "Личный проект «Кекстаграм» от HTML Academy",
   "repository": {
     "type": "git",

@@ -1,4 +1,8 @@
-import { generateUniqueId, getRandomElementOfArr, getRandomInt } from './utils.js';
+import {
+  generateUniqueId,
+  getRandomElementOfArr,
+  getRandomInt
+} from './utils.js';
 
 const NAMES = [
   'Лосяш',
@@ -37,7 +41,8 @@ const COMMENT_SENTENCES = [
   'Как можно было поймать такой неудачный момент?!'
 ];
 
-const MAX_COMMENTS_PER_POST = 5;
+const MIN_COMMENTS_PER_POST = 1;
+const MAX_COMMENTS_PER_POST = 50;
 const MIN_LIKES_ON_POST = 25;
 const MAX_LIKES_ON_POST = 200;
 
@@ -56,9 +61,12 @@ const createPost = (id) => ({
   url: `photos/${id}.jpg`,
   description: getRandomElementOfArr(DESCRIPTION_SENTENCES),
   likes: getRandomInt(MIN_LIKES_ON_POST, MAX_LIKES_ON_POST),
-  comments: createComments(getRandomInt(1, MAX_COMMENTS_PER_POST))
+  comments: createComments(
+    getRandomInt(MIN_COMMENTS_PER_POST, MAX_COMMENTS_PER_POST)
+  )
 });
 
-const generatePosts = (count) => Array.from({ length: count }, (_, id) => createPost(id + 1));
+const generatePosts = (count) =>
+  Array.from({ length: count }, (_, id) => createPost(id + 1));
 
 export { generatePosts };

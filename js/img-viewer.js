@@ -8,6 +8,16 @@ const commentsListElement = document.querySelector('.social__comments');
 const closeButtonBigPictureElement = bigPictureElement.querySelector(
   '.big-picture__cancel'
 );
+const buttonLoader = document.querySelector('.comments-loader');
+const countDisplayElement = bigPictureElement.querySelector(
+  '.comments-count__display'
+);
+
+const commentsCountElement = bigPictureElement.querySelector('.comments-count');
+
+let currentPage = 0;
+const PER_PAGE = 5;
+let commentsPost = [];
 
 const clearCommentList = () => {
   commentsListElement.innerHTML = '';
@@ -24,14 +34,6 @@ const onPopupEscKeydown = (event) => {
     closeModal();
   }
 };
-
-function closeModal() {
-  document.body.classList.remove('modal-open');
-  bigPictureElement.classList.add('hidden');
-  document.removeEventListener('keydown', onPopupEscKeydown);
-  closeButtonBigPictureElement.removeEventListener('click', closeModal);
-  clearCommentList();
-}
 
 /**
  * @param {Object} comment
@@ -51,6 +53,58 @@ const createComment = ({ avatar, message, name }) => {
   return commentElement;
 };
 
+const appendComments = (comments) => {
+  comments.forEach((comment) => {
+    const newComment = createComment(comment);
+    commentsListElement.append(newComment);
+  });
+};
+
+const updateCommentListCount = () => {
+  const displayedCommentsCount = commentsListElement.children.length;
+  countDisplayElement.textContent = displayedCommentsCount;
+
+  if (displayedCommentsCount >= commentsPost.length) {
+    buttonLoader.classList.add('hidden');
+    buttonLoader.removeEventListener('click', renderComments);
+  }
+};
+
+function renderComments() {
+  currentPage++;
+  const comments = paginate(commentsPost, currentPage, PER_PAGE);
+  appendComments(comments);
+  updateCommentListCount();
+}
+
+const removeModalCloseListeners = () => {
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  closeButtonBigPictureElement.removeEventListener('click', closeModal);
+};
+
+function closeModal() {
+  document.body.classList.remove('modal-open');
+  bigPictureElement.classList.add('hidden');
+  removeModalCloseListeners();
+
+  buttonLoader.removeEventListener('click', renderComments);
+
+  clearCommentList();
+  currentPage = 0;
+  commentsPost = [];
+  buttonLoader.classList.remove('hidden');
+}
+
+export function paginate(items, pageNumber, pageSize) {
+  const startIndex = (pageNumber - 1) * pageSize;
+  return [...items].slice(startIndex, startIndex + pageSize);
+}
+
+const addModalCloseListeners = () => {
+  document.addEventListener('keydown', onPopupEscKeydown);
+  closeButtonBigPictureElement.addEventListener('click', closeModal);
+};
+
 /**
  * @param {Object} post
  * @param {string} post.id - id поста
@@ -61,23 +115,35 @@ const createComment = ({ avatar, message, name }) => {
  * @return {Void}
  */
 
+const getCommentWordForm = (count) => {
+  if (count === 1) {
+    return 'комментарий';
+  } else if (count > 1 && count < 5) {
+    return 'комментария';
+  } else {
+    return 'комментариев';
+  }
+};
+
 const renderFullScreenPicture = (post) => {
   const { url, description, likes, comments } = post;
+
+  commentsPost = [...comments];
 
   bigPictureElement.querySelector('.big-picture__img img').src = url;
   bigPictureElement.querySelector('.social__caption').textContent = description;
   bigPictureElement.querySelector('.likes-count').textContent = likes;
-  bigPictureElement.querySelector('.comments-count').textContent =
-    comments.length;
+  commentsCountElement.textContent = comments.length;
+  commentsCountElement.nextSibling.textContent = ` ${getCommentWordForm(
+    comments.length
+  )}`;
 
-  comments.forEach((comment) => {
-    const newComment = createComment(comment);
-    commentsListElement.append(newComment);
-  });
+  renderComments();
+
+  buttonLoader.addEventListener('click', renderComments);
+
   openModal();
-
-  document.addEventListener('keydown', onPopupEscKeydown);
-  closeButtonBigPictureElement.addEventListener('click', closeModal);
+  addModalCloseListeners();
 };
 
 export { renderFullScreenPicture };

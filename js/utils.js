@@ -29,7 +29,6 @@ export function paginate(items, pageNumber, pageSize) {
   return [...items].splice(startIndex, pageSize);
 }
 
-
 export {
   generateUniqueId,
   getRandomElementOfArr,

@@ -128,7 +128,9 @@ sliderElement.noUiSlider.on('update', () => {
 });
 
 const addFilters = () => {
-  sliderElement.classList.add('visually-hidden');
+  if (currentFilter === filters.none) {
+    sliderElement.classList.add('visually-hidden');
+  }
   effectsRadioElement.addEventListener('change', handleEffectRadioChange);
 };
 

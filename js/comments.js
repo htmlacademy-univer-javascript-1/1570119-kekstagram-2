@@ -1,3 +1,5 @@
+import { paginate } from './utils.js';
+
 let currentPage = 0;
 const PER_PAGE = 5;
 let commentsPost = [];
@@ -14,11 +16,6 @@ const countDisplayElement = bigPictureElement.querySelector(
 const buttonLoader = document.querySelector('.comments-loader');
 
 const commentsListElement = document.querySelector('.social__comments');
-
-function paginate(items, pageNumber, pageSize) {
-  const startIndex = (pageNumber - 1) * pageSize;
-  return [...items].slice(startIndex, startIndex + pageSize);
-}
 
 const clearCommentList = () => {
   commentsListElement.innerHTML = '';

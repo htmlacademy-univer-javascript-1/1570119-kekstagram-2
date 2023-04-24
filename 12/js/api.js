@@ -1,0 +1,36 @@
+import { API_URL } from './api.constants.js';
+
+const getPosts = (onSuccess, onError) => {
+  fetch(`${API_URL}/data`)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error('Не удалось загрузить данные');
+    })
+    .then((data) => {
+      onSuccess(data);
+    })
+    .catch((error) => {
+      onError(error.message, true);
+    });
+};
+
+const sendForm = (onSuccess, onFail, body) => {
+  fetch(API_URL, {
+    method: 'POST',
+    body
+  })
+    .then((res) => {
+      if (res.ok) {
+        onSuccess();
+      } else {
+        throw new Error('Не удалось отправить форму');
+      }
+    })
+    .catch((error) => {
+      onFail(error.message);
+    });
+};
+
+export { getPosts, sendForm };

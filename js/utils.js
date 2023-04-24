@@ -24,15 +24,33 @@ const getRandomElementOfArr = (elements) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export function paginate(items, pageNumber, pageSize) {
+function paginate(items, pageNumber, pageSize) {
   const startIndex = (pageNumber - 1) * pageSize;
   return [...items].splice(startIndex, pageSize);
 }
+
+// Функция взята из интернета и доработана
+// Источник - https://www.freecodecamp.org/news/javascript-debounce-example
+
+function debounce(callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
 
 export {
   generateUniqueId,
   getRandomElementOfArr,
   isCorrectLength,
   getRandomInt,
-  isEscapeKey
+  isEscapeKey,
+  paginate,
+  debounce,
+  shuffleArray
 };

@@ -5,39 +5,40 @@ const errorTemplate = document
   .querySelector('#error')
   .content.querySelector('.error');
 
-const closeErrorToast = () => {
-  document.querySelector('.error').remove();
-};
+function onCloseModalKeydown(event) {
+  if (isEscapeKey(event)) {
+    event.preventDefault();
+    closeError();
+  }
+}
 
-const onCloseOutside = (event) => {
+function closeError() {
+  document.querySelector('.error').remove();
+  document.removeEventListener('keydown', onCloseModalKeydown);
+}
+
+function onCloseOutside(event) {
   event.stopPropagation();
   const errorElement = document.querySelector('.error');
   if (event.target === errorElement) {
-    closeErrorToast();
+    closeError();
   }
-};
+}
 
-const onCloseEscError = (event) => {
-  if (isEscapeKey(event)) {
-    event.preventDefault();
-    closeErrorToast();
-  }
-};
-
-const onCloseErrorClick = (event) => {
+function onCloseErrorClick(event) {
   event.preventDefault();
-  closeErrorToast();
-};
+  closeError();
+}
 
-const onOpenChangeFile = () => {
+function onOpenChangeFile() {
   document.querySelector('#upload-file').click();
-  closeErrorToast();
+  closeError();
   document
     .querySelector('#upload-file')
     .addEventListener('change', showUploadFileForm);
-};
+}
 
-const showErrorToast = (errorText, isErrorOnGetData = false) => {
+function showError(errorText, isErrorOnGetData = false) {
   const errorFragment = document.createDocumentFragment();
   const errorElement = errorTemplate.cloneNode(true);
   const titleElement = errorElement.querySelector('.error__title');
@@ -54,12 +55,12 @@ const showErrorToast = (errorText, isErrorOnGetData = false) => {
     buttonElement.addEventListener('click', onOpenChangeFile);
   }
 
-  document.addEventListener('keydown', onCloseEscError);
+  document.addEventListener('keydown', onCloseModalKeydown);
 
   errorFragment.append(errorElement);
   document.body.append(errorFragment);
 
   document.addEventListener('click', onCloseOutside);
-};
+}
 
-export { showErrorToast, closeErrorToast };
+export { showError, closeError };

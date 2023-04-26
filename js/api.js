@@ -1,6 +1,6 @@
-import { API_URL } from './api.constants.js';
+import { API_URL } from './api-constants.js';
 
-const getPosts = (onSuccess, onError) => {
+function getPosts(onSuccess, onError) {
   fetch(`${API_URL}/data`)
     .then((res) => {
       if (res.ok) {
@@ -14,9 +14,9 @@ const getPosts = (onSuccess, onError) => {
     .catch((error) => {
       onError(error.message, true);
     });
-};
+}
 
-const sendForm = (onSuccess, onFail, body) => {
+function sendForm(onSuccess, onFail, body) {
   fetch(API_URL, {
     method: 'POST',
     body
@@ -31,6 +31,6 @@ const sendForm = (onSuccess, onFail, body) => {
     .catch((error) => {
       onFail(error.message);
     });
-};
+}
 
 export { getPosts, sendForm };

@@ -1,14 +1,14 @@
 import { renderThumbnail } from './thumbnail.js';
 import { showUploadFileForm } from './form.js';
 import { getPosts } from './api.js';
-import { showErrorToast } from './error-toast.js';
+import { showError } from './error.js';
 import { showFilters } from './thumbnailFilters.js';
-const renderPostsWithFilter = (posts) => {
+function renderPostsAndFilter(posts) {
   renderThumbnail(posts);
   showFilters(posts);
-};
+}
 
-getPosts(renderPostsWithFilter, showErrorToast);
+getPosts(renderPostsAndFilter, showError);
 document
   .querySelector('#upload-file')
   .addEventListener('change', showUploadFileForm);

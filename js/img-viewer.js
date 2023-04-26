@@ -7,22 +7,22 @@ const closeButtonBigPictureElement = bigPictureElement.querySelector(
   '.big-picture__cancel'
 );
 
-const openModal = () => {
+function openModal() {
   document.body.classList.add('modal-open');
   bigPictureElement.classList.remove('hidden');
-};
+}
 
-const onPopupEscKeydown = (event) => {
+function onPopupEscKeydown(event) {
   if (isEscapeKey(event)) {
     event.preventDefault();
     closeModal();
   }
-};
+}
 
-const removeModalCloseListeners = () => {
+function removeModalCloseListeners() {
   document.removeEventListener('keydown', onPopupEscKeydown);
   closeButtonBigPictureElement.removeEventListener('click', closeModal);
-};
+}
 
 function closeModal() {
   document.body.classList.remove('modal-open');
@@ -32,10 +32,10 @@ function closeModal() {
   removeComments();
 }
 
-const addModalCloseListeners = () => {
+function addModalCloseListeners() {
   document.addEventListener('keydown', onPopupEscKeydown);
   closeButtonBigPictureElement.addEventListener('click', closeModal);
-};
+}
 
 /**
  * @param {Object} post
@@ -47,7 +47,7 @@ const addModalCloseListeners = () => {
  * @return {Void}
  */
 
-const renderFullScreenPicture = (post) => {
+function renderFullScreenPicture(post) {
   const { url, description, likes, comments } = post;
 
   bigPictureElement.querySelector('.big-picture__img img').src = url;
@@ -57,6 +57,6 @@ const renderFullScreenPicture = (post) => {
 
   openModal();
   addModalCloseListeners();
-};
+}
 
 export { renderFullScreenPicture };

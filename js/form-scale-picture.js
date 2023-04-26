@@ -3,52 +3,59 @@ const PHOTO_SCALE_DEFAULT = 100;
 const PHOTO_SCALE_MAX = 100;
 const PHOTO_SCALE_MIN = 25;
 
-const controlScaleSmaller = document.querySelector('.scale__control--smaller');
-const controlScaleBigger = document.querySelector('.scale__control--bigger');
-const controlScaleInput = document.querySelector('.scale__control--value');
-const previewPhoto = document.querySelector('.img-upload__preview');
+const controlScaleSmallerElement = document.querySelector(
+  '.scale__control--smaller'
+);
+const controlScaleBiggerElement = document.querySelector(
+  '.scale__control--bigger'
+);
+const controlScaleInputElement = document.querySelector(
+  '.scale__control--value'
+);
+const previewPhotoElement = document.querySelector('.img-upload__preview');
 
 let photoScaleValue = PHOTO_SCALE_DEFAULT;
 
-const setScalePhoto = (value) =>
-  (previewPhoto.style.transform = `scale(${value / 100})`);
+function setScalePhoto(value) {
+  return (previewPhotoElement.style.transform = `scale(${value / 100})`);
+}
 
-const handleBiggerScale = () => {
+function handleBiggerScale() {
   if (photoScaleValue + PROTO_SCALE_STEP >= 100) {
     photoScaleValue = PHOTO_SCALE_MAX;
-    controlScaleInput.value = `${photoScaleValue}%`;
+    controlScaleInputElement.value = `${photoScaleValue}%`;
     setScalePhoto(photoScaleValue);
     return;
   }
   photoScaleValue += PROTO_SCALE_STEP;
-  controlScaleInput.value = `${photoScaleValue}%`;
+  controlScaleInputElement.value = `${photoScaleValue}%`;
   setScalePhoto(photoScaleValue);
-};
+}
 
-const handleSmallerScale = () => {
+function handleSmallerScale() {
   if (photoScaleValue - PROTO_SCALE_STEP <= PHOTO_SCALE_MIN) {
     photoScaleValue = PHOTO_SCALE_MIN;
-    controlScaleInput.value = `${photoScaleValue}%`;
+    controlScaleInputElement.value = `${photoScaleValue}%`;
     setScalePhoto(photoScaleValue);
     return;
   }
 
   photoScaleValue -= PROTO_SCALE_STEP;
-  controlScaleInput.value = `${photoScaleValue}%`;
+  controlScaleInputElement.value = `${photoScaleValue}%`;
   setScalePhoto(photoScaleValue);
-};
+}
 
-const addScale = () => {
-  controlScaleBigger.addEventListener('click', handleBiggerScale);
-  controlScaleSmaller.addEventListener('click', handleSmallerScale);
-};
+function addScale() {
+  controlScaleBiggerElement.addEventListener('click', handleBiggerScale);
+  controlScaleSmallerElement.addEventListener('click', handleSmallerScale);
+}
 
-const resetScale = () => {
+function resetScale() {
   photoScaleValue = PHOTO_SCALE_DEFAULT;
-  controlScaleInput.value = `${photoScaleValue}%`;
-  controlScaleBigger.removeEventListener('click', handleBiggerScale);
-  controlScaleSmaller.removeEventListener('click', handleSmallerScale);
+  controlScaleInputElement.value = `${photoScaleValue}%`;
+  controlScaleBiggerElement.removeEventListener('click', handleBiggerScale);
+  controlScaleSmallerElement.removeEventListener('click', handleSmallerScale);
   setScalePhoto(photoScaleValue);
-};
+}
 
 export { addScale, resetScale };

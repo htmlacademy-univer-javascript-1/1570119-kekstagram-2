@@ -7,7 +7,7 @@ const templatePictureElement = document
 const pictureListElement = document.querySelector('.pictures');
 const pictureListFragment = document.createDocumentFragment();
 
-const renderThumbnail = (posts) => {
+function renderThumbnail(posts) {
   posts.forEach((post) => {
     const { url, likes, comments } = post;
     const pictureElement = templatePictureElement.cloneNode(true);
@@ -32,5 +32,5 @@ const renderThumbnail = (posts) => {
   });
 
   pictureListElement.append(pictureListFragment);
-};
+}
 export { renderThumbnail };

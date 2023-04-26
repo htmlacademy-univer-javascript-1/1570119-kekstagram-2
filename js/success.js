@@ -1,25 +1,32 @@
 import { isEscapeKey } from './utils.js';
 
-const templateSuccessToast = document
+const templateSuccess = document
   .querySelector('#success')
   .content.querySelector('.success');
 
-const onCloseOutside = (event) => {
+function onCloseOutside(event) {
   const successElement = document.querySelector('.success');
   event.stopPropagation();
   if (event.target === successElement) {
-    closeSuccessToast();
+    closeSuccess();
   }
-};
-
-function closeSuccessToast() {
-  document.querySelector('.success').remove();
-  document.removeEventListener('click', onCloseOutside);
 }
 
-const showSuccessToast = (text) => {
+function onCloseModalKeydown(event) {
+  if (isEscapeKey(event)) {
+    event.preventDefault();
+    closeSuccess();
+  }
+}
+function closeSuccess() {
+  document.querySelector('.success').remove();
+  document.removeEventListener('click', onCloseOutside);
+  document.removeEventListener('keydown', onCloseModalKeydown);
+}
+
+function showSuccess(text) {
   const successFragment = document.createDocumentFragment();
-  const successElement = templateSuccessToast.cloneNode(true);
+  const successElement = templateSuccess.cloneNode(true);
   const titleElement = successElement.querySelector('.success__title');
   const buttonElement = successElement.querySelector('.success__button');
 
@@ -29,26 +36,17 @@ const showSuccessToast = (text) => {
     'click',
     (evt) => {
       evt.preventDefault();
-      closeSuccessToast();
+      closeSuccess();
     },
     { once: true }
   );
 
-  document.addEventListener(
-    'keydown',
-    (evt) => {
-      if (isEscapeKey(evt)) {
-        evt.preventDefault();
-        closeSuccessToast();
-      }
-    },
-    { once: true }
-  );
+  document.addEventListener('keydown', onCloseModalKeydown);
 
   document.addEventListener('click', onCloseOutside);
   successFragment.append(successElement);
 
   document.body.append(successFragment);
-};
+}
 
-export { showSuccessToast, closeSuccessToast };
+export { showSuccess, closeSuccess };

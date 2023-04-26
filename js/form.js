@@ -3,96 +3,109 @@ import { validator } from './form-vaidation.js';
 import { addScale, resetScale } from './form-scale-picture.js';
 import { addFilters, resetFilters } from './form-filters-picture.js';
 import { sendForm } from './api.js';
-import { showSuccessToast } from './success-toast.js';
-import { showErrorToast } from './error-toast.js';
+import { showSuccess } from './success.js';
+import { showError } from './error.js';
+import { clearError } from './form-vaidation.js';
 
-const form = document.querySelector('#upload-select-image');
-const overlay = document.querySelector('.img-upload__overlay');
-const closeButton = overlay.querySelector('#upload-cancel');
-const hashtagInput = form.querySelector('.text__hashtags');
-const descriptionInput = form.querySelector('.text__description');
-const buttonSubmit = form.querySelector('.img-upload__submit');
+const formElement = document.querySelector('#upload-select-image');
+const overlayElement = document.querySelector('.img-upload__overlay');
+const closeButtonElement = overlayElement.querySelector('#upload-cancel');
+const hashtagInputElement = formElement.querySelector('.text__hashtags');
+const descriptionInputElement = formElement.querySelector('.text__description');
+const buttonSubmitElement = formElement.querySelector('.img-upload__submit');
+const fileChooserElement = document.querySelector('#upload-file');
+const previewElement = document.querySelector('.img-upload__preview')
+  .children[0];
 
-const openModal = () => {
-  overlay.classList.remove('hidden');
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+function openModal() {
+  overlayElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-};
+}
 
-const closeModal = () => {
-  overlay.classList.add('hidden');
+function closeModal() {
+  overlayElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
-};
+}
 
-const disabledButtonSubmit = () => {
-  buttonSubmit.disabled = true;
-  buttonSubmit.textContent = 'Сохряняю...';
-};
+function disabledButtonSubmitElement() {
+  buttonSubmitElement.disabled = true;
+  buttonSubmitElement.textContent = 'Сохряняю...';
+}
 
-const unDisabledButtonSubmit = () => {
-  buttonSubmit.disabled = false;
-  buttonSubmit.textContent = 'Сохранить';
-};
+function unDisabledButtonSubmitElement() {
+  buttonSubmitElement.disabled = false;
+  buttonSubmitElement.textContent = 'Сохранить';
+}
 
-const onPopupEscKeydown = (event) => {
+function onPopupEscKeydown(event) {
   if (isEscapeKey(event)) {
     event.preventDefault();
     closeForm();
   }
-};
+}
 
-const stopPropagation = (event) => {
+function stopPropagation(event) {
   event.stopPropagation();
-};
+}
 
-const clearForm = () => {
-  form.reset();
-};
+function clearForm() {
+  formElement.reset();
+}
 
-const submitForm = (event) => {
+function submitForm(event) {
   event.preventDefault();
   if (validator.validate()) {
-    disabledButtonSubmit();
+    disabledButtonSubmitElement();
     sendForm(
       () => {
-        showSuccessToast('Форма успешно отправлена');
+        showSuccess('Форма успешно отправлена');
         closeForm();
-        unDisabledButtonSubmit();
+        unDisabledButtonSubmitElement();
       },
       (message) => {
-        showErrorToast(message);
+        showError(message);
         closeForm(false);
-        unDisabledButtonSubmit();
+        unDisabledButtonSubmitElement();
       },
       new FormData(event.target)
     );
   }
-};
+}
 
-function closeForm(clearData = true) {
+function closeForm(isClearData = true) {
   closeModal();
 
   document.removeEventListener('keydown', onPopupEscKeydown);
-  closeButton.removeEventListener('click', closeForm);
-  hashtagInput.removeEventListener('keydown', stopPropagation);
-  descriptionInput.removeEventListener('keydown', stopPropagation);
-  if (clearData) {
+  closeButtonElement.removeEventListener('click', closeForm);
+  hashtagInputElement.removeEventListener('keydown', stopPropagation);
+  descriptionInputElement.removeEventListener('keydown', stopPropagation);
+  if (isClearData) {
     clearForm();
     resetFilters();
     resetScale();
+    clearError();
   }
 
-  form.removeEventListener('submit', submitForm);
+  formElement.removeEventListener('submit', submitForm);
 }
 
-const showUploadFileForm = () => {
+function showUploadFileForm() {
+  const file = fileChooserElement.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    previewElement.src = URL.createObjectURL(file);
+  }
   addFilters();
   openModal();
   addScale();
 
-  form.addEventListener('submit', submitForm);
+  formElement.addEventListener('submit', submitForm);
   document.addEventListener('keydown', onPopupEscKeydown);
-  closeButton.addEventListener('click', closeForm);
-  hashtagInput.addEventListener('keydown', stopPropagation);
-  descriptionInput.addEventListener('keydown', stopPropagation);
-};
+  closeButtonElement.addEventListener('click', closeForm);
+  hashtagInputElement.addEventListener('keydown', stopPropagation);
+  descriptionInputElement.addEventListener('keydown', stopPropagation);
+}
 export { showUploadFileForm };

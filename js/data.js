@@ -46,27 +46,29 @@ const MAX_COMMENTS_PER_POST = 50;
 const MIN_LIKES_ON_POST = 25;
 const MAX_LIKES_ON_POST = 200;
 
-// eslint-disable-next-line arrow-body-style
-const createComments = (count) => {
+function createComments(count) {
   return Array.from({ length: count }, () => ({
     id: generateUniqueId(),
     avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
     message: getRandomElementOfArr(COMMENT_SENTENCES),
     name: getRandomElementOfArr(NAMES)
   }));
-};
+}
 
-const createPost = (id) => ({
-  id,
-  url: `photos/${id}.jpg`,
-  description: getRandomElementOfArr(DESCRIPTION_SENTENCES),
-  likes: getRandomInt(MIN_LIKES_ON_POST, MAX_LIKES_ON_POST),
-  comments: createComments(
-    getRandomInt(MIN_COMMENTS_PER_POST, MAX_COMMENTS_PER_POST)
-  )
-});
+function createPost(id) {
+  return {
+    id,
+    url: `photos/${id}.jpg`,
+    description: getRandomElementOfArr(DESCRIPTION_SENTENCES),
+    likes: getRandomInt(MIN_LIKES_ON_POST, MAX_LIKES_ON_POST),
+    comments: createComments(
+      getRandomInt(MIN_COMMENTS_PER_POST, MAX_COMMENTS_PER_POST)
+    )
+  };
+}
 
-const generatePosts = (count) =>
-  Array.from({ length: count }, (_, id) => createPost(id + 1));
+function generatePosts(count) {
+  return Array.from({ length: count }, (_, id) => createPost(id + 1));
+}
 
 export { generatePosts };

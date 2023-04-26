@@ -1,12 +1,12 @@
 import { isCorrectLength } from './utils.js';
 
-const form = document.querySelector('#upload-select-image');
-const hashtagInput = form.querySelector('.text__hashtags');
-const descriptionInput = form.querySelector('.text__description');
+const formElement = document.querySelector('#upload-select-image');
+const hashtagInputElement = formElement.querySelector('.text__hashtags');
+const descriptionInputElement = formElement.querySelector('.text__description');
 const DESCRIPTION_MAX_LENGTH = 140;
 const MAX_HASHTAGS = 5;
 
-export const validator = new Pristine(form, {
+export const validator = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--invalid',
   successClass: 'img-upload__field-wrapper--valid',
@@ -16,13 +16,13 @@ export const validator = new Pristine(form, {
 });
 
 validator.addValidator(
-  hashtagInput,
+  hashtagInputElement,
   validateHashtags,
   'Допускаются только буквы и числа. Не должны повторяться. Хэштегов может быть не больше 5 через пробел.'
 );
 
 validator.addValidator(
-  descriptionInput,
+  descriptionInputElement,
   validateDescription,
   'Максимальное количество символов - 140'
 );
@@ -32,6 +32,9 @@ function validateDescription(value) {
 }
 
 function validateHashtags(value) {
+  if (value.length === 0) {
+    return true;
+  }
   const regex = /^#[a-zA-Z0-9]{1,19}$/;
 
   const tags = value.trim().split(/\s+/);
@@ -57,3 +60,17 @@ function validateHashtags(value) {
 
   return true;
 }
+
+function clearError() {
+  const errorElement = document.querySelector(
+    '.img-upload__field-wrapper--invalid'
+  );
+  if (errorElement) {
+    errorElement.classList.remove('img-upload__field-wrapper--invalid');
+    errorElement.querySelector(
+      '.pristine-error.img-upload__field__error'
+    ).innerText = '';
+  }
+}
+
+export { clearError };

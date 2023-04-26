@@ -1,7 +1,7 @@
 const DEFAULT_FILTER_VALUE = 100;
 
-const previewPhoto = document.querySelector('.img-upload__preview');
-const effectLevelValue = document.querySelector('.effect-level__value');
+const previewPhotoElement = document.querySelector('.img-upload__preview');
+const effectLevelValueElement = document.querySelector('.effect-level__value');
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectsRadioElement = document.querySelector('.img-upload__effects');
 
@@ -51,12 +51,12 @@ noUiSlider.create(sliderElement, {
   }
 });
 
-const removeFilter = () => {
-  previewPhoto.style['filter'] = '';
+function removeFilter() {
+  previewPhotoElement.style['filter'] = '';
   sliderElement.classList.add('visually-hidden');
-};
+}
 
-const updateSliderOptions = (filter) => {
+function updateSliderOptions(filter) {
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: filter.minValue,
@@ -65,20 +65,20 @@ const updateSliderOptions = (filter) => {
     start: filter.maxValue,
     step: filter.step
   });
-};
+}
 
-const applyFilter = (filter) => {
+function applyFilter(filter) {
   currentFilterClass = `effects__preview--${filter.name}`;
-  previewPhoto.classList.add(currentFilterClass);
-  previewPhoto.style[
+  previewPhotoElement.classList.add(currentFilterClass);
+  previewPhotoElement.style[
     'filter'
   ] = `${filter.filter}(${filter.maxValue}${filter.measurement})`;
   sliderElement.classList.remove('visually-hidden');
-};
+}
 
-const changeFilter = (filter) => {
+function changeFilter(filter) {
   if (currentFilterClass !== '') {
-    previewPhoto.classList.remove(currentFilterClass);
+    previewPhotoElement.classList.remove(currentFilterClass);
   }
   currentFilter = filter;
   currentFilterValue = filter.maxValue;
@@ -88,50 +88,51 @@ const changeFilter = (filter) => {
   } else {
     removeFilter();
   }
-  effectLevelValue.value = currentFilterValue;
+  effectLevelValueElement.value = currentFilterValue;
 
   updateSliderOptions(filter);
-};
+}
 
-const changeFilterValue = (value) => {
+function changeFilterValue(value) {
   currentFilterValue = value;
-  previewPhoto.style[
+  previewPhotoElement.style[
     'filter'
   ] = `${currentFilter.filter}(${value}${currentFilter.measurement})`;
-};
+}
 
-const handleEffectRadioChange = (event) => {
+function handleEffectRadioChange(event) {
   const filterName = event.target.value;
   changeFilter(filters[filterName]);
-};
+}
 
-const resetRadiosValue = () => {
-  const filterRadios = effectsRadioElement.querySelectorAll('.effects__radio');
-  filterRadios.forEach((element) => {
+function resetRadiosValue() {
+  const filterRadiosElement =
+    effectsRadioElement.querySelectorAll('.effects__radio');
+  filterRadiosElement.forEach((element) => {
     element.checked = false;
   });
-  filterRadios[0].checked = true;
-};
+  filterRadiosElement[0].checked = true;
+}
 
-const resetFilters = () => {
+function resetFilters() {
   changeFilter(filters.none);
   resetRadiosValue();
   effectsRadioElement.removeEventListener('change', handleEffectRadioChange);
-};
+}
 
 effectsRadioElement.addEventListener('change', handleEffectRadioChange);
 
 sliderElement.noUiSlider.on('update', () => {
   const sliderValue = sliderElement.noUiSlider.get();
-  effectLevelValue.value = sliderValue;
+  effectLevelValueElement.value = sliderValue;
   changeFilterValue(sliderValue);
 });
 
-const addFilters = () => {
+function addFilters() {
   if (currentFilter === filters.none) {
     sliderElement.classList.add('visually-hidden');
   }
   effectsRadioElement.addEventListener('change', handleEffectRadioChange);
-};
+}
 
 export { resetFilters, addFilters };

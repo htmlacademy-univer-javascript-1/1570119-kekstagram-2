@@ -1,4 +1,4 @@
-const getRandomInt = (min, max) => {
+function getRandomInt(min, max) {
   if (min < 0 || max < 0) {
     throw new RangeError('Числа в диапазоне должны быть неотрицательными');
   }
@@ -7,22 +7,26 @@ const getRandomInt = (min, max) => {
     [min, max] = [max, min];
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+}
 
-const isCorrectLength = (str, maxLength) => str.length <= maxLength;
+function isCorrectLength(str, maxLength) {
+  return str.length <= maxLength;
+}
 
 // https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with-javascript
 // eslint-disable-next-line arrow-body-style
-const generateUniqueId = () => {
+function generateUniqueId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
-};
+}
 
 // eslint-disable-next-line arrow-body-style
-const getRandomElementOfArr = (elements) => {
+function getRandomElementOfArr(elements) {
   return elements[getRandomInt(0, elements.length - 1)];
-};
+}
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+function isEscapeKey(evt) {
+  return evt.key === 'Escape';
+}
 
 function paginate(items, pageNumber, pageSize) {
   const startIndex = (pageNumber - 1) * pageSize;
@@ -42,7 +46,9 @@ function debounce(callback, timeoutDelay = 500) {
   };
 }
 
-const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
 
 export {
   generateUniqueId,

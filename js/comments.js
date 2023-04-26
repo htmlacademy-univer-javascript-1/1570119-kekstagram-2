@@ -13,13 +13,13 @@ const templateCommentElement = document
 const countDisplayElement = bigPictureElement.querySelector(
   '.comments-count__display'
 );
-const buttonLoader = document.querySelector('.comments-loader');
+const buttonLoaderElement = document.querySelector('.comments-loader');
 
 const commentsListElement = document.querySelector('.social__comments');
 
-const clearCommentList = () => {
+function clearCommentList() {
   commentsListElement.innerHTML = '';
-};
+}
 
 /**
  * @param {Object} comment
@@ -30,32 +30,33 @@ const clearCommentList = () => {
  * @return {void}
  */
 
-const createComment = ({ avatar, message, name }) => {
+function createComment({ avatar, message, name }) {
   const commentElement = templateCommentElement.cloneNode(true);
   const elementImg = commentElement.querySelector('.social__picture');
   elementImg.src = avatar;
   elementImg.alt = name;
   commentElement.querySelector('.social__text').textContent = message;
   return commentElement;
-};
+}
 
-const appendComments = (comments) => {
+function appendComments(comments) {
   comments.forEach((comment) => {
     const newComment = createComment(comment);
     commentsListElement.append(newComment);
   });
-};
-const updateCommentListCount = () => {
+}
+
+function updateCommentListCount() {
   const displayedCommentsCount = commentsListElement.children.length;
   countDisplayElement.textContent = displayedCommentsCount;
 
   if (displayedCommentsCount >= commentsPost.length) {
-    buttonLoader.classList.add('hidden');
-    buttonLoader.removeEventListener('click', renderComments);
+    buttonLoaderElement.classList.add('hidden');
+    buttonLoaderElement.removeEventListener('click', renderComments);
   }
-};
+}
 
-buttonLoader.removeEventListener('click', renderComments);
+buttonLoaderElement.removeEventListener('click', renderComments);
 
 function renderComments() {
   currentPage++;
@@ -64,14 +65,14 @@ function renderComments() {
   updateCommentListCount();
 }
 
-const getCommentWordForm = (count) => {
+function getCommentWordForm(count) {
   if (count !== 1) {
     return 'комментариев';
   }
   return 'комментария';
-};
+}
 
-const addComments = (comments) => {
+function addComments(comments) {
   commentsPost = [...comments];
   commentsCountElement.textContent = comments.length;
   commentsCountElement.nextSibling.textContent = ` ${getCommentWordForm(
@@ -79,17 +80,17 @@ const addComments = (comments) => {
   )}`;
   renderComments();
 
-  buttonLoader.addEventListener('click', renderComments);
-};
+  buttonLoaderElement.addEventListener('click', renderComments);
+}
 
-const removeComments = () => {
+function removeComments() {
   clearCommentList();
   currentPage = 0;
   commentsPost = [];
 
-  buttonLoader.removeEventListener('click', renderComments);
+  buttonLoaderElement.removeEventListener('click', renderComments);
 
-  buttonLoader.classList.remove('hidden');
-};
+  buttonLoaderElement.classList.remove('hidden');
+}
 
 export { addComments, removeComments };

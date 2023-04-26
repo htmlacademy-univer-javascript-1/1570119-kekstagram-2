@@ -2,12 +2,8 @@ import { renderThumbnail } from './thumbnail.js';
 import { debounce, shuffleArray } from './utils.js';
 
 const picturesElement = document.querySelector('.pictures');
-
-const clearPosts = () => {
-  picturesElement.querySelectorAll('.picture').forEach((pictureElement) => {
-    pictureElement.remove();
-  });
-};
+const filtersImageElement = document.querySelector('.img-filters');
+const formFilterElement = document.querySelector('.img-filters__form');
 
 const filters = {
   default: 'filter-default',
@@ -17,11 +13,15 @@ const filters = {
 
 let defaultPosts = [];
 
-const filtersImageElement = document.querySelector('.img-filters');
-const formFilter = document.querySelector('.img-filters__form');
+function clearPosts() {
+  picturesElement.querySelectorAll('.picture').forEach((pictureElement) => {
+    pictureElement.remove();
+  });
+}
 
-const compareByComments = (postA, postB) =>
-  postB.comments.length - postA.comments.length;
+function compareByComments(postA, postB) {
+  return postB.comments.length - postA.comments.length;
+}
 
 const onActiveFilter = debounce((event) => {
   if (!event.target.className.includes('img-filters__button')) {
@@ -44,21 +44,22 @@ const onActiveFilter = debounce((event) => {
     renderThumbnail(discussedArr);
   }
 });
-const showActiveFilter = (event) => {
+
+function showActiveFilter(event) {
   if (!event.target.className.includes('img-filters__button')) {
     return;
   }
-  formFilter.querySelectorAll('button').forEach((button) => {
+  formFilterElement.querySelectorAll('button').forEach((button) => {
     button.classList.remove('img-filters__button--active');
   });
   event.target.classList.add('img-filters__button--active');
-};
+}
 
-const showFilters = (posts) => {
+function showFilters(posts) {
   defaultPosts = [...posts];
   filtersImageElement.classList.remove('img-filters--inactive');
-  formFilter.addEventListener('click', showActiveFilter);
-  formFilter.addEventListener('click', onActiveFilter);
-};
+  formFilterElement.addEventListener('click', showActiveFilter);
+  formFilterElement.addEventListener('click', onActiveFilter);
+}
 
 export { showFilters };

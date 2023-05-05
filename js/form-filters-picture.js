@@ -100,8 +100,8 @@ function changeFilterValue(value) {
   ] = `${currentFilter.filter}(${value}${currentFilter.measurement})`;
 }
 
-function handleEffectRadioChange(event) {
-  const filterName = event.target.value;
+function handleEffectRadioChange(evt) {
+  const filterName = evt.target.value;
   changeFilter(filters[filterName]);
 }
 

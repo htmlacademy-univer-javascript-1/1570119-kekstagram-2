@@ -1,10 +1,11 @@
 import { isCorrectLength } from './utils.js';
 
+const MAX_HASHTAGS = 5;
+const DESCRIPTION_MAX_LENGTH = 140;
+
 const formElement = document.querySelector('#upload-select-image');
 const hashtagInputElement = formElement.querySelector('.text__hashtags');
 const descriptionInputElement = formElement.querySelector('.text__description');
-const DESCRIPTION_MAX_LENGTH = 140;
-const MAX_HASHTAGS = 5;
 
 export const validator = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',

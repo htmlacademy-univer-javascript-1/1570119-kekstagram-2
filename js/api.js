@@ -1,4 +1,4 @@
-import { API_URL } from './api-constants.js';
+const API_URL = 'https://26.javascript.pages.academy/kekstagram';
 
 function getPosts(onSuccess, onError) {
   fetch(`${API_URL}/data`)

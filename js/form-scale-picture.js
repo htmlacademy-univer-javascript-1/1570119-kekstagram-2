@@ -20,7 +20,7 @@ function setScalePhoto(value) {
   return (previewPhotoElement.style.transform = `scale(${value / 100})`);
 }
 
-function handleBiggerScale() {
+function onBiggerScale() {
   if (photoScaleValue + PROTO_SCALE_STEP >= 100) {
     photoScaleValue = PHOTO_SCALE_MAX;
     controlScaleInputElement.value = `${photoScaleValue}%`;
@@ -32,7 +32,7 @@ function handleBiggerScale() {
   setScalePhoto(photoScaleValue);
 }
 
-function handleSmallerScale() {
+function onSmallerScale() {
   if (photoScaleValue - PROTO_SCALE_STEP <= PHOTO_SCALE_MIN) {
     photoScaleValue = PHOTO_SCALE_MIN;
     controlScaleInputElement.value = `${photoScaleValue}%`;
@@ -46,15 +46,15 @@ function handleSmallerScale() {
 }
 
 function addScale() {
-  controlScaleBiggerElement.addEventListener('click', handleBiggerScale);
-  controlScaleSmallerElement.addEventListener('click', handleSmallerScale);
+  controlScaleBiggerElement.addEventListener('click', onBiggerScale);
+  controlScaleSmallerElement.addEventListener('click', onSmallerScale);
 }
 
 function resetScale() {
   photoScaleValue = PHOTO_SCALE_DEFAULT;
   controlScaleInputElement.value = `${photoScaleValue}%`;
-  controlScaleBiggerElement.removeEventListener('click', handleBiggerScale);
-  controlScaleSmallerElement.removeEventListener('click', handleSmallerScale);
+  controlScaleBiggerElement.removeEventListener('click', onBiggerScale);
+  controlScaleSmallerElement.removeEventListener('click', onSmallerScale);
   setScalePhoto(photoScaleValue);
 }
 

@@ -23,11 +23,11 @@ function compareByComments(postA, postB) {
   return postB.comments.length - postA.comments.length;
 }
 
-const onActiveFilter = debounce((event) => {
-  if (!event.target.className.includes('img-filters__button')) {
+const onActiveFilter = debounce((evt) => {
+  if (!evt.target.className.includes('img-filters__button')) {
     return;
   }
-  const id = event.target.getAttribute('id');
+  const id = evt.target.getAttribute('id');
 
   if (filters.default === id) {
     clearPosts();
@@ -45,20 +45,20 @@ const onActiveFilter = debounce((event) => {
   }
 });
 
-function showActiveFilter(event) {
-  if (!event.target.className.includes('img-filters__button')) {
+function onShowActiveFilter(evt) {
+  if (!evt.target.className.includes('img-filters__button')) {
     return;
   }
   formFilterElement.querySelectorAll('button').forEach((button) => {
     button.classList.remove('img-filters__button--active');
   });
-  event.target.classList.add('img-filters__button--active');
+  evt.target.classList.add('img-filters__button--active');
 }
 
 function showFilters(posts) {
   defaultPosts = [...posts];
   filtersImageElement.classList.remove('img-filters--inactive');
-  formFilterElement.addEventListener('click', showActiveFilter);
+  formFilterElement.addEventListener('click', onShowActiveFilter);
   formFilterElement.addEventListener('click', onActiveFilter);
 }
 

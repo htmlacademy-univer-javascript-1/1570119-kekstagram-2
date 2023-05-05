@@ -5,9 +5,9 @@ const errorTemplate = document
   .querySelector('#error')
   .content.querySelector('.error');
 
-function onCloseModalKeydown(event) {
-  if (isEscapeKey(event)) {
-    event.preventDefault();
+function onCloseModalKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
     closeError();
   }
 }
@@ -17,16 +17,16 @@ function closeError() {
   document.removeEventListener('keydown', onCloseModalKeydown);
 }
 
-function onCloseOutside(event) {
-  event.stopPropagation();
+function onCloseOutside(evt) {
+  evt.stopPropagation();
   const errorElement = document.querySelector('.error');
-  if (event.target === errorElement) {
+  if (evt.target === errorElement) {
     closeError();
   }
 }
 
-function onCloseErrorClick(event) {
-  event.preventDefault();
+function onCloseErrorClick(evt) {
+  evt.preventDefault();
   closeError();
 }
 

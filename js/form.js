@@ -7,6 +7,8 @@ import { showSuccess } from './success.js';
 import { showError } from './error.js';
 import { clearError } from './form-vaidation.js';
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 const formElement = document.querySelector('#upload-select-image');
 const overlayElement = document.querySelector('.img-upload__overlay');
 const closeButtonElement = overlayElement.querySelector('#upload-cancel');
@@ -17,7 +19,6 @@ const fileChooserElement = document.querySelector('#upload-file');
 const previewElement = document.querySelector('.img-upload__preview')
   .children[0];
 
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 function openModal() {
   overlayElement.classList.remove('hidden');
@@ -39,23 +40,23 @@ function unDisabledButtonSubmitElement() {
   buttonSubmitElement.textContent = 'Сохранить';
 }
 
-function onPopupEscKeydown(event) {
-  if (isEscapeKey(event)) {
-    event.preventDefault();
+function onPopupEscKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
     closeForm();
   }
 }
 
-function stopPropagation(event) {
-  event.stopPropagation();
+function onStopPropagation(evt) {
+  evt.stopPropagation();
 }
 
 function clearForm() {
   formElement.reset();
 }
 
-function submitForm(event) {
-  event.preventDefault();
+function onSubmitForm(evt) {
+  evt.preventDefault();
   if (validator.validate()) {
     disabledButtonSubmitElement();
     sendForm(
@@ -69,7 +70,7 @@ function submitForm(event) {
         closeForm(false);
         unDisabledButtonSubmitElement();
       },
-      new FormData(event.target)
+      new FormData(evt.target)
     );
   }
 }
@@ -79,8 +80,8 @@ function closeForm(isClearData = true) {
 
   document.removeEventListener('keydown', onPopupEscKeydown);
   closeButtonElement.removeEventListener('click', closeForm);
-  hashtagInputElement.removeEventListener('keydown', stopPropagation);
-  descriptionInputElement.removeEventListener('keydown', stopPropagation);
+  hashtagInputElement.removeEventListener('keydown', onStopPropagation);
+  descriptionInputElement.removeEventListener('keydown', onStopPropagation);
   if (isClearData) {
     clearForm();
     resetFilters();
@@ -88,7 +89,7 @@ function closeForm(isClearData = true) {
     clearError();
   }
 
-  formElement.removeEventListener('submit', submitForm);
+  formElement.removeEventListener('submit', onSubmitForm);
 }
 
 function showUploadFileForm() {
@@ -102,10 +103,10 @@ function showUploadFileForm() {
   openModal();
   addScale();
 
-  formElement.addEventListener('submit', submitForm);
+  formElement.addEventListener('submit', onSubmitForm);
   document.addEventListener('keydown', onPopupEscKeydown);
   closeButtonElement.addEventListener('click', closeForm);
-  hashtagInputElement.addEventListener('keydown', stopPropagation);
-  descriptionInputElement.addEventListener('keydown', stopPropagation);
+  hashtagInputElement.addEventListener('keydown', onStopPropagation);
+  descriptionInputElement.addEventListener('keydown', onStopPropagation);
 }
 export { showUploadFileForm };

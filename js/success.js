@@ -4,17 +4,17 @@ const templateSuccess = document
   .querySelector('#success')
   .content.querySelector('.success');
 
-function onCloseOutside(event) {
+function onCloseOutside(evt) {
   const successElement = document.querySelector('.success');
-  event.stopPropagation();
-  if (event.target === successElement) {
+  evt.stopPropagation();
+  if (evt.target === successElement) {
     closeSuccess();
   }
 }
 
-function onCloseModalKeydown(event) {
-  if (isEscapeKey(event)) {
-    event.preventDefault();
+function onCloseModalKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
     closeSuccess();
   }
 }

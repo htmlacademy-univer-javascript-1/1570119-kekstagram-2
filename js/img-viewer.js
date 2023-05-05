@@ -12,9 +12,9 @@ function openModal() {
   bigPictureElement.classList.remove('hidden');
 }
 
-function onPopupEscKeydown(event) {
-  if (isEscapeKey(event)) {
-    event.preventDefault();
+function onPopupEscKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
     closeModal();
   }
 }
